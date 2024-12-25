@@ -1,6 +1,21 @@
 import React from 'react';
+import useAuth from '../hooks/useAuth';
+import useDeposit from '../hooks/useDeposit';
 
 const Profile = () => {
+  const { user } = useAuth();
+  const { deposits, error } = useDeposit();
+ 
+  // Find all deposits that match the user's phone number
+  const matchingDeposits = deposits.filter((deposit) => deposit.paymentNumber === user?.phone);
+  console.log("matchingDeposits", matchingDeposits);
+
+  // Calculate the total deposit amount
+  const totalDeposit = matchingDeposits.length > 0 
+    ? matchingDeposits.reduce((acc, deposit) => acc + parseFloat(deposit.amount), 0) 
+    : 0;
+  console.log("totalDeposit", totalDeposit);
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="grid lg:w-[50%] bg-slate-400 mx-4 rounded-lg overflow-hidden">
@@ -21,7 +36,7 @@ const Profile = () => {
               />
             </svg>
           </span>
-          Name: alexkhan
+          Name: {user?.name}
         </div>
 
         {/* Mobile Number Section */}
@@ -41,7 +56,7 @@ const Profile = () => {
               />
             </svg>
           </span>
-          Mobile Number: 01775520761
+          Mobile Number: {user?.phone}
         </div>
 
         {/* Main Balance Section */}
@@ -81,7 +96,7 @@ const Profile = () => {
               />
             </svg>
           </span>
-          Deposit Balance: 0.00 BDT
+          Deposit Balance: {totalDeposit} BDT
         </div>
 
         {/* Package Status Section */}
