@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import axios from 'axios'; // Import axios
 
 const LoginForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(''); // New line
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Perform login logic here (e.g., API call)
-      console.log('Logging in with:', { phoneNumber, password });
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/login', {
+          phone: phoneNumber,
+          password,
+        });
+        if (response.data.success) {
+          setSuccess(response.data.message);
+          setError('');
+          // Handle successful login (e.g., store token, redirect)
+          console.log('Login successful:', response.data.result);
+        } else {
+          setError(response.data.error);
+          setSuccess('');
+        }
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+          // Convert error object to string
+          const errorMessage = typeof error.response.data.error === 'object'
+            ? Object.values(error.response.data.error).join(', ')
+            : error.response.data.error;
+          setError(errorMessage);
+        } else {
+          setError('Login failed. Please try again.');
+        }
+        setSuccess('');
+      }
     }
   };
 
@@ -41,6 +67,7 @@ const LoginForm = () => {
 
         {/* Error message */}
         {error && <div className="text-red-500 text-sm text-center mb-4">{error}</div>}
+        {success && <div className="text-green-500 text-sm text-center mb-4">{success}</div>} {/* New line */}
 
         <form onSubmit={handleSubmit}>
           {/* Phone Number Input */}
@@ -54,14 +81,14 @@ const LoginForm = () => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="Enter your phone number"
-              className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-700"
+              className="bg-gray-700 mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
 
           {/* Password Input */}
-          <div className="mb-6 text-white">
-            <label className="block text-sm font-medium " htmlFor="password">
+          <div className="mb-6">
+            <label className="block text-sm font-medium" htmlFor="password">
               Password
             </label>
             <input
@@ -70,7 +97,7 @@ const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-700"
+              className="mt-2 w-full px-4 py-2 border border-gray-300 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
@@ -86,16 +113,14 @@ const LoginForm = () => {
           </div>
         </form>
 
-        {/* Forgot Password Link */}
+        {/* Register Link */}
         <div className="mt-4 text-center">
-          <a href="#" className="text-white hover:underline text-sm">
-            Forgot Password?
-          </a>
-        </div>
-        <div className="mt-4 text-center">
-          <a href="/register" className="text-white hover:underline text-sm">
-           Not Register ? Click Here..
-          </a>
+          <p className="text-sm text-green-600">
+            Don&apos;t have an account?{' '}
+            <a href="/register" className="text-blue-600 hover:underline">
+              Register here
+            </a>
+          </p>
         </div>
       </div>
     </div>
