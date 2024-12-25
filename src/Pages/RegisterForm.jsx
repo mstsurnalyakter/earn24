@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios'; // Import axios
 import useAuth from '../hooks/useAuth';
 
 const RegisterForm = () => {
