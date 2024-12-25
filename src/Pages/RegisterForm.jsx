@@ -11,28 +11,55 @@ const RegisterForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/signup', {
-        name,
-        phone: phoneNumber,
-        password,
-      });
-      if (response.data.success) {
-        setSuccess(response.data.message);
-        setError('');
-      } else {
-        setError(response.data.error);
+    if (validateForm()) {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/signup', {
+          name,
+          phone: phoneNumber,
+          password,
+        });
+        if (response.data.success) {
+          setSuccess(response.data.message);
+          setError('');
+        } else {
+          setError(response.data.error);
+          setSuccess('');
+        }
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+          setError(error.response.data.error);
+        } else {
+          setError('Registration failed. Please try again.');
+        }
         setSuccess('');
       }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        setError(error.response.data.error);
-      } else {
-        setError('Registration failed. Please try again.');
-      }
-      setSuccess('');
     }
+  
   };
+
+  // Validate the form fields
+  const validateForm = () => {
+    if (!name || !phoneNumber || !password) {
+      setError('All fields are required.');
+      return false;
+    }
+
+    // Phone number validation: must be 11 digits and start with 0
+    if (!/^(0\d{10})$/.test(phoneNumber)) {
+      setError('Phone number must be 11 digits and start with 0.');
+      return false;
+    }
+
+    // Password validation (at least 6 characters)
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return false;
+    }
+
+    setError('');
+    return true;
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-800 flex justify-center items-center py-10 text-white">
