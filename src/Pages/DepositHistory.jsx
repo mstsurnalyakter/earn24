@@ -3,14 +3,20 @@ import useDeposit from '../hooks/useDeposit';
 
 const DepositHistory = () => {
   const { deposits, error } = useDeposit();
+
+  const formatDate = (date)=>{
+    const options = {year:'numeric',month:'2-digit',day:'2-digit'};
+    return new Date(date).toLocaleDateString('en-CA',options);
+  }
+  
   console.log(deposits)
   // Sample data for the deposit history
-  const depositHistory = [
-    { id: 1, amount: 1000, method: 'Bkash', date: '2024-12-01', status: 'Completed' },
-    { id: 2, amount: 5000, method: 'Nagad', date: '2024-12-05', status: 'Pending' },
-    { id: 3, amount: 2500, method: 'Bkash', date: '2024-12-07', status: 'Completed' },
-    // Add more records as needed
-  ];
+  // const depositHistory = [
+  //   { id: 1, amount: 1000, method: 'Bkash', date: '2024-12-01', status: 'Completed' },
+  //   { id: 2, amount: 5000, method: 'Nagad', date: '2024-12-05', status: 'Pending' },
+  //   { id: 3, amount: 2500, method: 'Bkash', date: '2024-12-07', status: 'Completed' },
+  //   // Add more records as needed
+  // ];
 
   return (
     <div className="bg-gray-800 py-10 px-4 text-white">
@@ -33,12 +39,14 @@ const DepositHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {depositHistory.map((deposit) => (
+            {
+            
+            deposits?.length >0 && deposits?.map((deposit) => (
               <tr key={deposit.id} className="border-t">
-                <td className="py-3 px-4 ">{deposit.id}</td>
-                <td className="py-3 px-4 ">{deposit.amount} TK</td>
-                <td className="py-3 px-4 ">{deposit.method}</td>
-                <td className="py-3 px-4 ">{deposit.date}</td>
+                <td className="py-3 px-4 ">{deposit?.id}</td>
+                <td className="py-3 px-4 ">{deposit?.amount} TK</td>
+                <td className="py-3 px-4 ">{deposit?.paymentMethod}</td>
+                <td className="py-3 px-4 ">{formatDate(deposit.created_at)}</td>
                 <td className="py-3 px-4 ">
                   <span
                     className={`px-3 py-1 rounded-full text-white ${
