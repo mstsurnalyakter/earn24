@@ -19,6 +19,7 @@ import AllPackage from './Pages/AllPackage';
 import ChangePassword from './Pages/ChangePassword';
 import Dashboard from './Layout/Dashboard';
 import Users from './Pages/dashboard/Users';
+import AuthProvider from './providers/AuthProvider';
 
 const router = createBrowserRouter([
 {
@@ -59,6 +60,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <App /> */}
+    <AuthProvider>
+
     <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

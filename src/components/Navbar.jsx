@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => (
+    
     <div className="mx-6 ">
         <header className=" text-white text-xl p-4 flex justify-between items-center  rounded">
         {/* Left: User Picture */}

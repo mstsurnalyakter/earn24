@@ -40,6 +40,32 @@ const DepositePage = () => {
     }
   }, [amount, paymentMethod]);
 
+  // handleNextClick function to submit the deposit
+  // const handleNextClick = async () => {
+  //   if (isNextEnabled) {
+  //     try {
+  //       const response = await fetch('http://your-backend-url/api/deposit', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ paymentMethod, amount }),
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+
+  //       const data = await response.json();
+  //       console.log('Success:', data);
+  //       navigate("/manualdeposit", { state: { paymentMethod, amount } });
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //       setErrorMessage('Failed to submit deposit. Please try again.');
+  //     }
+  //   }
+  // };
+
   const handleNextClick = () => {
     if (isNextEnabled) {
       navigate("/manualdeposit", { state: { paymentMethod, amount } });

@@ -5,107 +5,16 @@
 // import toast from "react-hot-toast";
 // import { useQuery } from "@tanstack/react-query";
 
-import axios from "axios";
-import { useEffect, useState } from "react";
+import useUsers from "../../hooks/useUsers";
+
+
 
 
 const Users = () => {
-//   // const { users, userLoading, refetch } = useUsers();
-//   const axiosSecure = useAxiosSecure();
-//   const [users,setUsers] = useState([])
-//    const [currentPage, setCurrentPage] = useState(1);
-//    const [itemPerPage, setItemPerPage] = useState(5);
-//      const [search, setSearch] = useState("");
-//      const [searchText, setSearchText] = useState("");
-//     const [count, setCount] = useState(0);
-//     const numberOfPages = Math.ceil(count / itemPerPage);
-//     const pages = [...Array(numberOfPages).keys()].map(
-//       (element) => element + 1
-//     );
+  const { users, error } = useUsers();
 
-
-//     const {
-//       data = [],
-//       isLoading,
-//       refetch,
-//       isError,
-//       error,
-//     } = useQuery({
-//       queryKey: ["all-users", currentPage, itemPerPage, search],
-//       enabled: !!localStorage.getItem("access-token"),
-//       queryFn: async () => {
-//         const { data } = await axiosSecure(
-//           `/all-users?page=${currentPage}&size=${itemPerPage}&search=${search}`
-//         );
-//         setUsers(data);
-//         return data;
-//       },
-//     });
-
-
-//       const {
-//         data: countData = [],
-//         isLoading: countIsLoading,
-//         refetch: countRefetch,
-//         isError: countIsError,
-//         error: countError,
-//       } = useQuery({
-//         queryKey: ["users-count",search],
-//         enabled: !!localStorage.getItem("access-token"),
-//         queryFn: async () => {
-//           const { data } = await axiosSecure(`/users-count?search=${search}`);
-//           setCount(data.count);
-//           return data;
-//         },
-//       });
-
-
-//   if (isLoading || countIsLoading) return <LoadingSpinner />;
-
-//     if (isError || countError) {
-//       toast.error(error.message);
-//     }
-
-
-
-//     const handleSearch = (e) => {
-//       e.preventDefault();
-//       setSearch(searchText.trim());
-//       setCurrentPage(1)
-//       refetch();
-//     };
-
-
-//      const handlePaginationButton = (value) => {
-//        console.log(value);
-//        setCurrentPage(value);
-//        refetch()
-//      };
-
-const [users, setUsers] = useState([]);
-const [error, setError] = useState('');
-
-
-useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/admin');
-        console.log(response.data.users)
-        setUsers(response.data.users);
-        setError('');
-      } catch (error) {
-        if (error.response && error.response.data && error.response.data.error) {
-          setError(error.response.data.error);
-        } else {
-          setError('Failed to fetch users. Please try again.');
-        }
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  console.log('user',users)
+  console.log('user',users);
+  console.log("error", error);
 
 
   return (

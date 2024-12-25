@@ -1,21 +1,19 @@
 import { useState } from 'react';
-import axios from 'axios'; // Import axios
+import useAuth from '../hooks/useAuth';
 
 const LoginForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(''); // New line
+  const { login} = useAuth();
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/login', {
-          phone: phoneNumber,
-          password,
-        });
+        const response = await login(phoneNumber, password);
         if (response.data.success) {
           setSuccess(response.data.message);
           setError('');

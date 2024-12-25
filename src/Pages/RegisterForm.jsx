@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios'; // Import axios
+import useAuth from '../hooks/useAuth';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -7,17 +8,14 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const { createUser} = useAuth();
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/signup', {
-          name,
-          phone: phoneNumber,
-          password,
-        });
+        const response =  await createUser(name, phoneNumber, password);
         if (response.data.success) {
           setSuccess(response.data.message);
           setError('');
@@ -31,7 +29,7 @@ const RegisterForm = () => {
         } else {
           setError('Registration failed. Please try again.');
         }
-        setSuccess('');
+        
       }
     }
   
