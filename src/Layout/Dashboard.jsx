@@ -33,14 +33,15 @@ const Dashboard = () => {
             </li>
             <li className="mb-2">
               <NavLink
-                to={"/deposite"}
+                to={"/dashboard/deposits"}
+                end
                 className={({ isActive }) =>
                   `flex items-center p-2 space-x-3 font-bold text-gray-900 rounded-md ${
                     isActive ? "rounded-sm bg-gray-100" : ""
                   }`
                 }
               >
-                <span className="ml-2">Deposite</span>
+                <span className="ml-2">Deposits</span>
               </NavLink>
             </li>
             <li className="mb-2">

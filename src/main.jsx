@@ -20,6 +20,7 @@ import ChangePassword from './Pages/ChangePassword';
 import Dashboard from './Layout/Dashboard';
 import Users from './Pages/dashboard/Users';
 import AuthProvider from './providers/AuthProvider';
+import Deposits from './Pages/dashboard/Deposits';
 
 const router = createBrowserRouter([
 {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
     {
       index: true,
       element:<Users/>
+    },
+    {
+      path: "deposits",
+      element: <Deposits />,
     }
   ]
 }
