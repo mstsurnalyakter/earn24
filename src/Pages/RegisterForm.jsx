@@ -1,55 +1,52 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Perform registration logic here (e.g., API call)
-      console.log('Registering with:', { name, phoneNumber, password });
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/signup', {
+        name,
+        phone: phoneNumber,
+        password,
+      });
+      if (response.data.success) {
+        setSuccess(response.data.message);
+        setError('');
+      } else {
+        setError(response.data.error);
+        setSuccess('');
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError('Registration failed. Please try again.');
+      }
+      setSuccess('');
     }
-  };
-
-  // Validate the form fields
-  const validateForm = () => {
-    if (!name || !phoneNumber || !password) {
-      setError('All fields are required.');
-      return false;
-    }
-
-    // Phone number validation: must be 11 digits and start with 0
-    if (!/^(0\d{10})$/.test(phoneNumber)) {
-      setError('Phone number must be 11 digits and start with 0.');
-      return false;
-    }
-
-    // Password validation (at least 6 characters)
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
-      return false;
-    }
-
-    setError('');
-    return true;
   };
 
   return (
     <div className="min-h-screen bg-gray-800 flex justify-center items-center py-10 text-white">
       <div className="bg-gray-700 p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center  mb-6">Register</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">Register</h2>
 
         {/* Error message */}
         {error && <div className="text-red-500 text-sm text-center mb-4">{error}</div>}
+        {success && <div className="text-green-500 text-sm text-center mb-4">{success}</div>}
 
         <form onSubmit={handleSubmit}>
           {/* Name Input */}
           <div className="mb-4">
-            <label className="block text-sm font-medium " htmlFor="name">
+            <label className="block text-sm font-medium" htmlFor="name">
               Name
             </label>
             <input
@@ -65,7 +62,7 @@ const RegisterForm = () => {
 
           {/* Phone Number Input */}
           <div className="mb-4">
-            <label className="block text-sm font-medium " htmlFor="phoneNumber">
+            <label className="block text-sm font-medium" htmlFor="phoneNumber">
               Phone Number
             </label>
             <input
@@ -81,7 +78,7 @@ const RegisterForm = () => {
 
           {/* Password Input */}
           <div className="mb-6">
-            <label className="block text-sm font-medium " htmlFor="password">
+            <label className="block text-sm font-medium" htmlFor="password">
               Password
             </label>
             <input
