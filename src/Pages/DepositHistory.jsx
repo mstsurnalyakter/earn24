@@ -1,6 +1,9 @@
 import React from 'react';
+import useDeposit from '../hooks/useDeposit';
 
 const DepositHistory = () => {
+  const { deposits, error } = useDeposit();
+  console.log(deposits)
   // Sample data for the deposit history
   const depositHistory = [
     { id: 1, amount: 1000, method: 'Bkash', date: '2024-12-01', status: 'Completed' },
