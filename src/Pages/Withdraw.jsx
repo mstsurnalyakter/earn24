@@ -1,12 +1,45 @@
 import React,{useState} from 'react'
+import useAuth from '../hooks/useAuth';
+import axios from 'axios';
 
 const Withdraw = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [amount, setAmount] = useState("");
+  const [paymentNumber, setPaymentNumber] = useState("");
+  const { user } = useAuth();
+  const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
+    
 
+  const handleSubmit= async e =>{
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/add-withdraw', {
+        amount: amount.toString(), // Ensure amount is a string
+        userId:user?.id.toString() || "1", // Ensure user_id is a string
+        paymentMethod,
+        paymentNumber,
+      });
+      if (response.status === 201) {
+        setSuccess('Deposit has been added successfully');
+        setError('');
+      } else {
+        setError('Failed to add deposit');
+        setSuccess('');
+      }
+    } catch (error) {
+      console.error(error.response); // Log the entire error response
+      if (error.response && error.response.data) {
+        setError(JSON.stringify(error.response.data));
+      } else {
+        setError('Failed to add deposit. Please try again.');
+      }
+      setSuccess('');
+    }
+  }
 
-
-
+  
 
   return (
     <div className='rounded-xl border-4 border-teal-500 p-4 text-white text-center'>
@@ -65,7 +98,9 @@ const Withdraw = () => {
                 id="number"
                 type="number"
                 placeholder="Enter your number"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={paymentNumber}
+                onChange={e=>setPaymentNumber(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
@@ -78,17 +113,21 @@ const Withdraw = () => {
                 id="amount"
                 type="text"
                 placeholder="Enter amount"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={amount}
+                onChange={e=>setAmount(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           </div>
         </div>
         <div className='pt-4'>
 
-          <button className="btn btn-wide">Withdraw Now</button>
+          <button onClick={handleSubmit} className="btn btn-wide">Withdraw Now</button>
         </div>
 
       </div>
+      {error && <div className="text-red-500 text-sm text-center mt-4">{error}</div>}
+      {success && <div className="text-green-500 text-sm text-center mt-4">{success}</div>}
     </div>
   )
 }
