@@ -21,6 +21,7 @@ import Dashboard from './Layout/Dashboard';
 import Users from './Pages/dashboard/Users';
 import AuthProvider from './providers/AuthProvider';
 import Deposits from './Pages/dashboard/Deposits';
+import Withdraws from './Pages/dashboard/Withdraws';
 
 const router = createBrowserRouter([
 {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
     {
       path: "deposits",
       element: <Deposits />,
+    },
+    {
+      path: "withdraw",
+      element: <Withdraws />,
     }
   ]
 }

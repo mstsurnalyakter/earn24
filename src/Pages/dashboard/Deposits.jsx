@@ -44,6 +44,7 @@ const Deposits = () => {
             <tr>
               <th className="py-3 px-4 text-left">Amount</th>
               <th className="py-3 px-4 text-left">Payment Method</th>
+              <th className="py-3 px-4 text-left">Payment Number</th>
               <th className="py-3 px-4 text-left">Transaction ID</th>
               <th className="py-3 px-4 text-left">Payment Number</th>
               <th className="py-3 px-4 text-left">Status</th>
@@ -56,7 +57,8 @@ const Deposits = () => {
               <tr key={deposit.id}>
                 <td className="py-3 px-4">{deposit.amount}</td>
                 <td className="py-3 px-4">{deposit.paymentMethod}</td>
-                <td className="py-3 px-4">{deposit.transaction_id}</td>
+                <td className="py-3 px-4">{deposit.paymentNumber}</td>
+                <td className="py-3 px-4">{deposit.transactionId}</td>
                 <td className="py-3 px-4">{deposit.paymentNumber}</td>
                 <td className="py-3 px-4">
                   <button className={
