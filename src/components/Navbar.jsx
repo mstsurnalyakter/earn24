@@ -107,12 +107,20 @@ const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => {
 
         {/* Conditional Rendering Based on User Role */}
         {user?.role === "admin" ? (
-          <div>
-            <Link to="./">
-              <button>Home</button>
+          <div className="flex items-center gap-4">
+            <Link to="/">
+              <button className={({ isActive }) =>
+                  `flex items-center p-2 space-x-3 font-bold text-gray-900 rounded-md ${
+                    isActive ? "rounded-sm bg-gray-100" : ""
+                  }`
+                }>Home</button>
             </Link>
             <Link to="/dashboard">
-              <button>Dashboard</button>
+              <button className={({ isActive }) =>
+                  `flex items-center p-2 space-x-3 font-bold text-gray-900 rounded-md ${
+                    isActive ? "rounded-sm bg-gray-100" : ""
+                  }`
+                }>Dashboard</button>
             </Link>
           </div>
         ) : (

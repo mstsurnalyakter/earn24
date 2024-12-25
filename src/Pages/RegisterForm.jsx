@@ -25,9 +25,10 @@ const RegisterForm = () => {
       } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
           setError(error.response.data.error);
-        } else {
-          setError('Registration failed. Please try again.');
-        }
+        } 
+        // else {
+        //   setError('Registration failed. Please try again.');
+        // }
         
       }
     }
