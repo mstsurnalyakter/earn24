@@ -1,9 +1,12 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import useAuth from "../hooks/useAuth";
 
-const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => (
-    
-    <div className="mx-6 ">
+const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => {
+    const { user} = useAuth();
+    console.log(user.role);
+    return(
+        <div className="mx-6 ">
         <header className=" text-white text-xl p-4 flex justify-between items-center  rounded">
         {/* Left: User Picture */}
         <div className="border-yellow-300 border-2 w-10 h-10 rounded-full overflow-hidden">
@@ -27,6 +30,13 @@ const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => (
                 <Link to='./'>
                 <button>Home</button>
                 </Link>
+                {
+                    user.role === 'admin' ? (
+                        <Link to='/dashboard'>
+                        <button>Dashboard</button>
+                        </Link>
+                    ) : null
+                }
         {/* Right: Login/Logout Button */}
         <div>
             {isLoggedIn ? (
@@ -49,6 +59,13 @@ const Navbar = ({ isLoggedIn, handleLogin, handleLogout }) => (
         </div>
     </header>
     </div>
-);
+    )
+}
+
+Navbar.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    handleLogin: PropTypes.func.isRequired,
+    handleLogout: PropTypes.func.isRequired,
+};
 
 export default Navbar;
