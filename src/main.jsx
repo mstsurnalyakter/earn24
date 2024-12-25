@@ -17,6 +17,8 @@ import LoginForm from './Pages/LoginForm';
 import RegisterForm from './Pages/RegisterForm';
 import AllPackage from './Pages/AllPackage';
 import ChangePassword from './Pages/ChangePassword';
+import Dashboard from './Layout/Dashboard';
+import Users from './Pages/dashboard/Users';
 
 const router = createBrowserRouter([
 {
@@ -35,8 +37,22 @@ const router = createBrowserRouter([
     {path:"/transaction", element: <Transaction /> },
     {path:"/manualdeposit", element: <ManualDeposit /> },
     {path:"/deposithistory", element: <DepositHistory /> },
+
     
     // { path: "/package", element: <Package },  
+  ]
+},
+// dashboard route
+{
+  path: "dashboard",
+  element: (
+      <Dashboard />
+  ),
+  children: [
+    {
+      index: true,
+      element:<Users/>
+    }
   ]
 }
 ]);
