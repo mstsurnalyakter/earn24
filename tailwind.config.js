@@ -1,4 +1,6 @@
-module.exports = {
+import daisyui from 'daisyui';
+
+export default {
   content: [
     './index.html', 
     './src/**/*.{js,jsx,ts,tsx}',  // Ensure your paths are correct
@@ -7,6 +9,6 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('daisyui'),
+    daisyui,
   ],
 };
