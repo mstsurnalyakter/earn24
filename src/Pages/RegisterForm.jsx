@@ -8,7 +8,7 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const { createUser} = useAuth();
+  const { createUser,  loading,setLoading} = useAuth();
   const navigate = useNavigate();
 
   // Handle form submission
@@ -16,6 +16,7 @@ const RegisterForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
+        setLoading(true);
         const response =  await createUser(name, phoneNumber, password);
         console.log(response);
         if (response.data.success) {
