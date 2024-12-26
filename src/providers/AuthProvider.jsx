@@ -18,6 +18,7 @@ const AuthProvider = ({children}) => {
                 password,
             });
            console.log(response.data);
+            return response;
         } catch (error) {
             console.error('Registration failed:', error);
         } finally {
@@ -34,6 +35,7 @@ const AuthProvider = ({children}) => {
             });
             setUser(response.data.user);
             console.log(response.data.user);
+            return response;
             // setUser({ email: response.data.email });
         } catch (error) {
             console.error('Login failed:', error);

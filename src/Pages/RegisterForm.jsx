@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -8,6 +9,7 @@ const RegisterForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const { createUser} = useAuth();
+  const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -15,8 +17,10 @@ const RegisterForm = () => {
     if (validateForm()) {
       try {
         const response =  await createUser(name, phoneNumber, password);
+        console.log(response);
         if (response.data.success) {
           setSuccess(response.data.message);
+          navigate('/login');
           setError('');
         } else {
           setError(response.data.error);

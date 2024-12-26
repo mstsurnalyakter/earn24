@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(''); // New line
+  const [success, setSuccess] = useState(''); 
   const { login} = useAuth();
+  const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -14,11 +16,13 @@ const LoginForm = () => {
     if (validateForm()) {
       try {
         const response = await login(phoneNumber, password);
-        if (response.data.success) {
-          setSuccess(response.data.message);
+        console.log(response)
+        if (response.data) {
+          setSuccess(response.data.user);
           setError('');
           // Handle successful login (e.g., store token, redirect)
-          console.log('Login successful:', response.data.result);
+          console.log('Login successful:', response.data.user);
+          navigate('/'); 
         } else {
           setError(response.data.error);
           setSuccess('');
