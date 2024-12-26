@@ -18,6 +18,8 @@ const AuthProvider = ({children}) => {
                 password,
             });
            console.log(response.data);
+           console.log(response)
+           
             return response;
         } catch (error) {
             console.error('Registration failed:', error);

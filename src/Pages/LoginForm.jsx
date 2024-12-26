@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(''); 
-  const { login, setLoading} = useAuth();
-  const location = useLocation();
-  const from = location?.state || "/";
+  const { login} = useAuth();
+
   const navigate = useNavigate();
 
   // Handle form submission
@@ -17,14 +16,20 @@ const LoginForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        setLoading(true);
         const response = await login(phoneNumber, password);
         console.log(response)
-        setSuccess(response.data.user);
-        setError('');
-        navigate(from);
-        // Handle successful login (e.g., store token, redirect)
-        console.log('Login successful:', response.data.user);
+        if (response.data) {
+          setSuccess(response.data.user);
+          setError('');
+          // Handle successful login (e.g., store token, redirect)
+          console.log('Login successful:', response.data.user);
+          navigate('/'); 
+        } else {
+          setError(response.data.error);
+          setSuccess('');
+        }
+
+
       } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
           // Convert error object to string
