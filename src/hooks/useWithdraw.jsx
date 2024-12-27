@@ -9,7 +9,7 @@ const useWithdraw = () => {
     useEffect(() => {
         const fetchUsers = async () => {
           try {
-            const response = await axios.get('http://127.0.0.1:8000/api/withdraws');
+            const response = await axios.get(' https://api.earn24.trodad.xyz/api/withdraws');
             console.log(response.data.withdraws)
             setWithdraws(response.data.withdraws);
             setError('');

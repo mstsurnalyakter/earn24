@@ -10,7 +10,7 @@ const useDeposit = () => {
     useEffect(() => {
         const fetchUsers = async () => {
           try {
-            const response = await axios.get('http://127.0.0.1:8000/api/deposits');
+            const response = await axios.get(' https://api.earn24.trodad.xyz/api/deposits');
             console.log(response.data.deposits)
             setDeposits(response.data.deposits);
             setError('');

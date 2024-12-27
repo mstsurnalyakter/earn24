@@ -12,7 +12,7 @@ const AuthProvider = ({children}) => {
     const createUser = async (name, phoneNumber, password) => {
         setLoading(true);
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/signup', {
+            const response = await axios.post(' https://api.earn24.trodad.xyz/api/signup', {
                 name,
                 phone: phoneNumber,
                 password,
@@ -31,7 +31,7 @@ const AuthProvider = ({children}) => {
     const login = async (phoneNumber, password) => {
         setLoading(true);
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/login', {
+            const response = await axios.post(' https://api.earn24.trodad.xyz/api/login', {
                 phone: phoneNumber,
                 password,
             });

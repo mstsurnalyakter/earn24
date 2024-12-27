@@ -8,7 +8,7 @@ const Deposits = () => {
   useEffect(() => {
     const fetchDeposits = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/deposits');
+        const response = await axios.get(' https://api.earn24.trodad.xyz/api/deposits');
         setDeposits(response.data.deposits);
       } catch (error) {
         setError('Failed to fetch deposits');
@@ -21,7 +21,7 @@ const Deposits = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.put(`http://127.0.0.1:8000/api/deposits/${id}/status`, { status });
+      await axios.put(` https://api.earn24.trodad.xyz/api/deposits/${id}/status`, { status });
       setDeposits((prevDeposits) =>
         prevDeposits.map((deposit) =>
           deposit.id === id ? { ...deposit, status } : deposit

@@ -15,7 +15,7 @@ const Withdraw = () => {
   const handleSubmit= async e =>{
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/add-withdraw', {
+      const response = await axios.post(' https://api.earn24.trodad.xyz/api/add-withdraw', {
         amount: amount.toString(), // Ensure amount is a string
         userId:user?.id.toString() || "1", // Ensure user_id is a string
         paymentMethod,
